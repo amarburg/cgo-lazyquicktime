@@ -3,6 +3,7 @@
 typedef struct {
   float duration;
   int num_frames;
+  unsigned char valid;
 } MovieInfo;
 
 

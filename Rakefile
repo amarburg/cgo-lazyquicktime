@@ -8,6 +8,8 @@ task :test => :build_so do
     sh "cmake .."
     sh "make"
   end
+
+  sh "build/cgo-lazyquicktime-test"
 end
 
 task :build_so do
