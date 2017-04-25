@@ -16,7 +16,8 @@ typedef enum {
 // I wonder about the wisdom of defining a new interchange format
 typedef struct  {
   void *data;
-  int width, rows;
+  int width, height;
   int channels;
   ImageDepth depth;
+  unsigned char valid;
 } ImageBuffer;

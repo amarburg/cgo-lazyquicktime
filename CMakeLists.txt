@@ -13,7 +13,8 @@ add_definitions( -std=c++11 )
 ## Build as CPP to using GoogleTest framework
 set( TEST_SRCS
   test_c/test_sum.cpp
-  test_c/test_simple_api.cpp )
+  test_c/test_movie_info.cpp
+  test_c/test_get_frame.cpp )
 
 add_executable(cgo-lazyquicktime-test ${TEST_SRCS} )
 target_link_libraries( cgo-lazyquicktime-test
