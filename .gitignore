@@ -3,6 +3,9 @@
 *.a
 *.so
 
+## Auto-generated headers
+*.h
+
 # Folders
 _obj
 _test
