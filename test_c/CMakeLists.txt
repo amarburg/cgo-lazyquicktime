@@ -27,19 +27,18 @@ target_link_libraries( cgo-lazyquicktime-test
 
 ## Compile in paths to ExternalData
 ## Who the hell designed this API?
-##
-## (Hell no, this make no sense)
-# include(ExternalData)
-# set(ExternalData_URL_TEMPLATES
-#     "https://github.com/amarburg/go-lazyfs-testfiles/raw/master/CamHD_Vent_Short.mov" )
-#
-# ExternalData_Add_Target( LocalTestMov )
-# ExternalData_Expand_Arguments( LocalTestMov
-#             LOCAL_TEST_MOV
-#             DATA{CamHD_Vent_Short.mov}  )
-target_compile_definitions( cgo-lazyquicktime-test PUBLIC LOCAL_TEST_MOV="${CMAKE_CURRENT_SOURCE_DIR}/CamHD_Vent_Short.mov" )
-#
+include(ExternalData)
+set(ExternalData_URL_TEMPLATES "file://$ENV{GOPATH}/src/github.com/amarburg/go-lazyfs-testfiles/hashed/%(algo)/%(hash)"
+                                "https://github.com/amarburg/go-lazyfs-testfiles/raw/master/hashed/%(algo)/%(hash)" )
+
+ExternalData_Expand_Arguments( LocalTestMov
+            LOCAL_TEST_MOV
+            DATA{CamHD_Vent_Short.mov}  )
+ExternalData_Add_Target( LocalTestMov )
+
+target_compile_definitions( cgo-lazyquicktime-test PUBLIC LOCAL_TEST_MOV="${LOCAL_TEST_MOV}" )
 
 enable_testing()
 add_test( NAME cgo-lazyquicktime-test
          COMMAND cgo-lazyquicktime-test )
+add_dependencies( cgo-lazyquicktime-test LocalTestMov )
