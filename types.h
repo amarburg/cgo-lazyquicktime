@@ -1,6 +1,6 @@
 #pragma once
 
-typedef struct {
+typedef struct MovieInfo {
   float duration;
   int num_frames;
   unsigned char valid;
@@ -14,7 +14,7 @@ typedef enum {
 } ImageDepth;
 
 // I wonder about the wisdom of defining a new interchange format
-typedef struct  {
+typedef struct ImageBuffer {
   void *data;
   int width, height;
   int channels;
