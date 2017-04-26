@@ -6,6 +6,7 @@ task :test => :build_so do
     mkdir "build" unless FileTest.directory?("build")
     Dir.chdir "build" do
       sh "cmake .."
+      sh "make gtest_ext" unless FileTest.exists?("gtest/include/gtest.h")
       sh "make"
       sh "make CTEST_OUTPUT_ON_FAILURE=TRUE test"
     end
