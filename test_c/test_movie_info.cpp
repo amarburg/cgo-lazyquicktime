@@ -19,10 +19,9 @@ TEST( MovieInfo, FirstTest )
 // Test against a real movie
 TEST( MovieInfo, LazyFsTestFiles )
 {
-  char url[] =  "../go-lazyfs-testfiles/CamHD_Vent_Short.mov";
 
   // TODO: How to set this path..?
-  MovieInfo info = MovInfo(url);
+  MovieInfo info = MovInfo( LOCAL_TEST_MOV );
 
   ASSERT_EQ( info.valid, 1 );
 

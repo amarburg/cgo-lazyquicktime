@@ -16,8 +16,6 @@ TEST( GetFrame, FirstTest )
   ASSERT_EQ( img.valid, 0 );
 }
 
-char localFilePath[] =  "../go-lazyfs-testfiles/CamHD_Vent_Short.mov";
-
 // TEST( GetFrame, LocalFileZeroFrame )
 // {
 //   // TODO: How to set this path..?
@@ -29,7 +27,7 @@ char localFilePath[] =  "../go-lazyfs-testfiles/CamHD_Vent_Short.mov";
 TEST( GetFrame, LocalFileValidFrame )
 {
   // TODO: How to set this path..?
-  ImageBuffer img = GetFrame(localFilePath, 1 );
+  ImageBuffer img = GetFrame( LOCAL_TEST_MOV, 1 );
   ASSERT_EQ( img.valid, 1 );
 
   ASSERT_EQ( img.width, 1920 );
