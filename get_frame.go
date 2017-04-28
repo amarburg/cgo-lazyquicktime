@@ -47,11 +47,11 @@ func imageBufferFromImage(img image.Image) C.ImageBuffer {
 	// TODO.   Almost certainly a more idiomatic way to do this
 	ok := false
 
-	fmt.Printf("Image is type %T\n", img)
+	//fmt.Printf("Image is type %T\n", img)
 
 	switch t := img.(type) {
 	default:
-		fmt.Printf("unexpected type %T\n", t)
+		fmt.Printf("Unexpected type %T\n", t)
 	case *image.Gray:
 		g := img.(*image.Gray)
 		// if( ok ) {
