@@ -5,10 +5,12 @@
 #include "liblazyquicktime.h"
 #include "types.h"
 
+#include "test_data_paths.h"
+
 using std::endl;
 using std::cout;
 
-TEST( GetFrame, FirstTest )
+TEST( GetFrame, NullConstructor )
 {
   char url[] = "";
   ImageBuffer img = GetFrame(url, 1);
@@ -23,11 +25,8 @@ TEST( GetFrame, FirstTest )
 //   ASSERT_EQ( img.valid, 0 );
 // }
 
-// Test against a real movie
-TEST( GetFrame, LocalFileValidFrame )
+void validateCamHDFrame( ImageBuffer &img )
 {
-  // TODO: How to set this path..?
-  ImageBuffer img = GetFrame( LOCAL_TEST_MOV, 1 );
   ASSERT_EQ( img.valid, 1 );
 
   ASSERT_EQ( img.width, 1920 );
@@ -35,6 +34,26 @@ TEST( GetFrame, LocalFileValidFrame )
   ASSERT_TRUE( img.data != nullptr );
   ASSERT_EQ( img.channels, 4 );
   ASSERT_EQ( img.depth, IMG_8U );
+}
+
+// Test against a real movie
+TEST( GetFrame, GetFrameFromLocalFile )
+{
+  // TODO: How to set this path..?
+  ImageBuffer img = GetFrame( LOCAL_TEST_MOV, 1 );
+
+  validateCamHDFrame( img );
+
+  free( img.data );
+}
+
+// Test against a real movie
+TEST( GetFrame, GetFrameFromHTTPFile )
+{
+  // TODO: How to set this path..?
+  ImageBuffer img = GetFrame( CI_TEST_MOVIE_URL, 1 );
+
+  validateCamHDFrame( img );
 
   free( img.data );
 }
