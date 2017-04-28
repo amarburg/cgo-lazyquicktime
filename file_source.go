@@ -20,11 +20,12 @@ func sourceFromCPath(path *C.char) (lazyfs.FileSource, error) {
 	var file lazyfs.FileSource
 	var err error
 
-	if match, _ := regexp.MatchString("/^{http}/", goPath); match {
+	match, _ := regexp.MatchString("^http", goPath);
+	if  match {
 		uri, err := url.Parse(goPath)
 		file, err = lazyfs.OpenHttpSource(*uri)
 		if err != nil {
-			return nil, fmt.Errorf("Error opening file: %s", err.Error())
+			return nil, fmt.Errorf("Error opening URL: %s", err.Error())
 		}
 	} else {
 		file, err = lazyfs.OpenLocalFile(C.GoString(path))
