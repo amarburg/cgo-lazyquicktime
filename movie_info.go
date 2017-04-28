@@ -12,7 +12,7 @@ func MovInfo(path *C.char) C.MovieInfo {
 
 	file, err := sourceFromCPath(path)
 
-	if err != nil {
+	if file == nil || err != nil {
 		fmt.Printf("Error opening path: %s", err.Error())
 		return C.MovieInfo{}
 	}
