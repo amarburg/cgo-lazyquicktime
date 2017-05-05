@@ -12,12 +12,12 @@ link_directories( ${CMAKE_SOURCE_DIR}/.. )
   find_package( Threads REQUIRED )
 #endif()
 
-#if(APPLE)
+if(APPLE)
   ## Force absolute paths to shared libraries
   cmake_policy(SET CMP0060 NEW)
-set( MACOSX_RPATH OFF )
-set(CMAKE_SKIP_RPATH 1)
-#endif()
+  set( MACOSX_RPATH OFF )
+  set(CMAKE_SKIP_RPATH 1)
+endif()
 
 add_definitions( -std=c++11 )
 
