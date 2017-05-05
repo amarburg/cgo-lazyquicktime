@@ -7,7 +7,7 @@ task :default => :build_so
 task :build_so do
   sh "go build -buildmode=c-shared -o liblazyquicktime.so"
 
-  ## If OSX, set library to identify itself with absolute path 
+  ## If OSX, set library to identify itself with absolute path
   if OS.mac?
     ldPath = Pathname.new(__FILE__).parent.join('liblazyquicktime.so')
     sh "install_name_tool -id #{ldPath} liblazyquicktime.so"
