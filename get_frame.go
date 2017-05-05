@@ -11,6 +11,9 @@ import (
 //TODO.  Lots of repetition between this API and movie_info.go
 // room for DRY?
 
+//TODO.  is Printf on error the best way to get error information out?
+
+
 //export GetFrame
 func GetFrame(path *C.char, frameNum C.int) C.ImageBuffer {
 
