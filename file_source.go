@@ -12,7 +12,7 @@ func sourceFromCPath(path *C.char) (lazyfs.FileSource, error) {
 
 	goPath := C.GoString(path)
 
-	// TODO.  Validate path
+	// TODO.  Additional validatation of path
 	if len(goPath) == 0 {
 		return nil, fmt.Errorf("Zero length filename: %s", goPath)
 	}
