@@ -57,3 +57,15 @@ TEST( GetFrame, GetFrameFromHTTPFile )
 
   free( img.data );
 }
+
+
+// Test against a multimov
+TEST( GetFrame, GetFrameFromLocalMultimov )
+{
+  // TODO: How to set this path..?
+  ImageBuffer img = GetFrame( LOCAL_TEST_MULTIMOV, 1 );
+
+  validateCamHDFrame( img );
+
+  free( img.data );
+}

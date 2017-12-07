@@ -41,11 +41,15 @@ set(ExternalData_URL_TEMPLATES "file://$ENV{GOPATH}/src/github.com/amarburg/go-l
 ExternalData_Expand_Arguments( LocalTestMov
             LOCAL_TEST_MOV
             DATA{CamHD_Vent_Short.mov}  )
+
 ExternalData_Add_Target( LocalTestMov )
 
-target_compile_definitions( cgo-lazyquicktime-test PUBLIC LOCAL_TEST_MOV="${LOCAL_TEST_MOV}" )
+target_compile_definitions( cgo-lazyquicktime-test PUBLIC
+                    CMAKE_BINARY_DIR="${CMAKE_BINARY_DIR}"
+                    CMAKE_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
 enable_testing()
-add_test( NAME cgo-lazyquicktime-test
-         COMMAND cgo-lazyquicktime-test )
+externaldata_add_test( NAME cgo-lazyquicktime-test
+         COMMAND ./cgo-lazyquicktime-test
+         DIRECTORY ${CMAKE_BINARY_DIR} )
 add_dependencies( cgo-lazyquicktime-test LocalTestMov )

@@ -2,9 +2,9 @@ package main
 
 // #include "types.h"
 import "C"
+
 import (
 	"fmt"
-	"github.com/amarburg/go-lazyquicktime"
 	"image"
 )
 
@@ -17,21 +17,15 @@ import (
 //export GetFrame
 func GetFrame(path *C.char, frameNum C.int) C.ImageBuffer {
 
-	file, err := sourceFromCPath(path)
+	goPath := C.GoString(path)
+	ext,err := movieExtractorFromPath( goPath )
 
 	if err != nil {
-		fmt.Printf("Error opening path: %s", err.Error())
+		fmt.Printf("Error extracting image: %s", err.Error())
 		return C.ImageBuffer{}
 	}
 
-	qtInfo, err := lazyquicktime.LoadMovMetadata(file)
-
-	if err != nil {
-		fmt.Printf("Error getting metadata: %s", err.Error())
-		return C.ImageBuffer{}
-	}
-
-	img, err := qtInfo.ExtractFrame(int(frameNum))
+	img, err := ext.ExtractFrame(uint64(frameNum))
 
 	if err != nil {
 		fmt.Printf("Error extracting image: %s", err.Error())
@@ -73,7 +67,17 @@ func imageBufferFromImage(img image.Image) C.ImageBuffer {
 		out.data = C.CBytes(g.Pix)
 		// }
 		ok = true
-	}
+case *image.NRGBA:
+	g := img.(*image.NRGBA)
+	// fmt.Printf("%T: %v\n", g, g)
+
+	// if( ok ) {
+	out.channels = 4
+	out.depth = C.IMG_8U
+	out.data = C.CBytes(g.Pix)
+	// }
+	ok = true
+}
 
 	if ok {
 		out.valid = C.uchar(1)

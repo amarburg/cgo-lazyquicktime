@@ -3,34 +3,25 @@ package main
 // #include "types.h"
 import "C"
 import (
-	"fmt"
-	"github.com/amarburg/go-lazyquicktime"
 )
 
 //export MovInfo
 func MovInfo(path *C.char) C.MovieInfo {
 
-	file, err := sourceFromCPath(path)
+	goPath := C.GoString(path)
+	ext, err := movieExtractorFromPath( goPath )
 
-	if file == nil || err != nil {
-		fmt.Printf("Error opening path: %s", err.Error())
-		return C.MovieInfo{}
-	}
+	if err != nil || ext == nil {
+		return C.MovieInfo{
+			valid:      0,
+		}
 
-	qtInfo, err := lazyquicktime.LoadMovMetadata(file)
-
-	if err != nil {
-		fmt.Printf("Error getting metadata: %s", err.Error())
-		return C.MovieInfo{}
-	}
-
-	return qtInfoToMovieInfo(qtInfo)
 }
 
-func qtInfoToMovieInfo(qtInfo *lazyquicktime.LazyQuicktime) C.MovieInfo {
 	return C.MovieInfo{
-		duration:   C.float(qtInfo.Duration()),
-		num_frames: C.int(qtInfo.NumFrames()),
+		duration:   C.float(ext.Duration().Seconds()),
+		num_frames: C.int(ext.NumFrames()),
 		valid:      1,
 	}
+
 }
