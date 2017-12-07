@@ -22,9 +22,7 @@ endif()
 add_definitions( -std=c++11 )
 
 ## Build as C++ becuase the GTest framework is C++
-set( TEST_SRCS
-  test_movie_info.cpp
-  test_get_frame.cpp )
+file( GLOB TEST_SRCS *.cpp )
 
 add_executable(cgo-lazyquicktime-test ${TEST_SRCS} )
 target_link_libraries( cgo-lazyquicktime-test

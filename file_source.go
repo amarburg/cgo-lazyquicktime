@@ -7,8 +7,8 @@ import (
 	"github.com/amarburg/go-lazyquicktime"
 	"github.com/amarburg/go-multimov"
 	"net/url"
-	"regexp"
 	"path/filepath"
+	"regexp"
 )
 
 func sourceFromPath(path string) (lazyfs.FileSource, error) {
@@ -21,8 +21,8 @@ func sourceFromPath(path string) (lazyfs.FileSource, error) {
 	var file lazyfs.FileSource
 	var err error
 
-	match, _ := regexp.MatchString("^http", path);
-	if  match {
+	match, _ := regexp.MatchString("^http", path)
+	if match {
 		uri, err := url.Parse(path)
 		file, err = lazyfs.OpenHttpSource(*uri)
 		if err != nil {
@@ -42,8 +42,7 @@ func sourceFromPath(path string) (lazyfs.FileSource, error) {
 	return file, nil
 }
 
-
-func movieExtractorFromPath( path string ) (lazyquicktime.MovieExtractor, error) {
+func movieExtractorFromPath(path string) (lazyquicktime.MovieExtractor, error) {
 
 	if filepath.Ext(path) == ".mov" {
 
@@ -59,22 +58,21 @@ func movieExtractorFromPath( path string ) (lazyquicktime.MovieExtractor, error)
 			return nil, err
 		}
 
-	return qtInfo, nil
+		return qtInfo, nil
 
-} else if filepath.Ext(path) == ".json" {
+	} else if filepath.Ext(path) == ".json" {
 
-	fmt.Println(path)
+		fmt.Println(path)
 
-		mm,err := multimov.LoadMultiMov( path )
+		mm, err := multimov.LoadMultiMov(path)
 		if err != nil {
-return nil, err
-}
+			return nil, err
+		}
 
-	return mm, nil
+		return mm, nil
 
-}
+	}
 
-
-return nil, fmt.Errorf("Can't make a movie extractor from file %s", path)
+	return nil, fmt.Errorf("Can't make a movie extractor from file %s", path)
 
 }
