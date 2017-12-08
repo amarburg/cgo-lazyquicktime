@@ -53,7 +53,10 @@ func GetFrameQt(id C.int, frameNum C.int) C.ImageBuffer {
 	}
 
 	ext := val.(lazyquicktime.MovieExtractor)
-	img, err := ext.ExtractFrame(uint64(frameNum))
+
+	img, perf, err := ext.ExtractFramePerf(uint64(frameNum))
+
+	fmt.Printf("Read took %g; decode took %g\n", perf.Read.Seconds(), perf.Decode.Seconds())
 
 	if err != nil {
 		fmt.Printf("Error extracting image: %s", err.Error())
