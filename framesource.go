@@ -1,44 +1,15 @@
 package main
 
 // #include "types.h"
+// #include <errno.h>
 import "C"
 
 import (
 	"fmt"
 	"github.com/amarburg/go-frameset/framesource"
-	"sync"
 	"io"
 )
 
-//TODO.  is Printf on error the best way to get error information out?
-type FrameSourceMap struct {
-	sync.RWMutex
-	nextId				int
-	internal			map[int]framesource.FrameSource
-}
-
-func (rm *FrameSourceMap) Load(key int) (framesource.FrameSource, bool) {
-	rm.RLock()
-	defer rm.RUnlock()
-
-	value,ok := rm.internal[key]
-	return value,ok
-}
-
-func (rm *FrameSourceMap) Delete(key int) {
-	rm.Lock()
-	defer rm.Unlock()
-	delete(rm.internal, key)
-}
-
-func (rm *FrameSourceMap) Add(value framesource.FrameSource) int {
-	rm.Lock()
-	defer rm.Unlock()
-	id := rm.nextId
-	rm.internal[id] = value
-	rm.nextId++
-return id
-}
 
 
 var IdMap FrameSourceMap
@@ -70,24 +41,25 @@ func CloseFrameSource(id C.int) {
 }
 
 //export FrameSourceNext
-func FrameSourceNext(id C.int) C.ImageBuffer {
+func FrameSourceNext(id C.int, buffer *C.ImageBuffer) int64 {
 
 	source, has := IdMap.Load(int(id))
 
 	if !has {
 		fmt.Printf("Id doesn't exist")
-		return C.ImageBuffer{}
+		return -1
 	}
 
-	img, err := source.Next()
+	img, frameNum, err := source.Next()
 
 	switch err {
 	case nil:
-		return imageBufferFromImage(img)
+		 imageToImageBuffer( img, buffer )
+		return int64(frameNum)
 	case io.EOF:
-		return C.ImageBuffer{}
+		return 0
 	default:
 		fmt.Printf("Error extracting image: %s", err.Error())
-		return C.ImageBuffer{}
+		return -1
 	}
 }

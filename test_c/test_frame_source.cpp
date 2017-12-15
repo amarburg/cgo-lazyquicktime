@@ -18,8 +18,15 @@ TEST( FrameSource, FromFrameSet )
   int fd = OpenFrameSource( LOCAL_TEST_FRAMESET );
 
   // TODO: How to set this path..?
-  ImageBuffer img = FrameSourceNext( fd );
-  validateCamHDFrame( img );
+  ImageBuffer img;
+
+  for( int i = 0; i < LOCAL_TEST_FRAMESET_NUMFRAMES; i++ ) {
+    int err = FrameSourceNext( fd, &img );
+
+    ASSERT_EQ( err, LOCAL_TEST_FRAMESET_FRAMES[i] );
+
+    validateCamHDFrame( img );
+  }
 
   CloseQt( fd );
 

@@ -18,13 +18,14 @@ TEST( GetFrame, GetFrameQtFromLocalFile )
   int fd = OpenQt( LOCAL_TEST_MOV );
 
   // TODO: How to set this path..?
-  ImageBuffer img = GetFrameQt( fd, 1 );
+  ImageBuffer img;
+  ASSERT_EQ( GetFrameQt( fd, 1, &img ), 0 );
   validateCamHDFrame( img );
 
-  img = GetFrameQt( fd, 5 );
+  ASSERT_EQ( GetFrameQt( fd, 5, &img ), 0 );
   validateCamHDFrame( img );
 
-  img = GetFrameQt( fd, 10 );
+  ASSERT_EQ( GetFrameQt( fd, 10, &img ), 0 );
   validateCamHDFrame( img );
 
   MovieInfo info = GetMovieInfoQt( fd );
@@ -33,26 +34,3 @@ TEST( GetFrame, GetFrameQtFromLocalFile )
 
   free( img.data );
 }
-//
-// // Test against a real movie
-// TEST( GetFrame, GetFrameFromHTTPFile )
-// {
-//   // TODO: How to set this path..?
-//   ImageBuffer img = GetFrame( CI_TEST_MOVIE_URL, 1 );
-//
-//   validateCamHDFrame( img );
-//
-//   free( img.data );
-// }
-//
-//
-// // Test against a multimov
-// TEST( GetFrame, GetFrameFromLocalMultimov )
-// {
-//   // TODO: How to set this path..?
-//   ImageBuffer img = GetFrame( LOCAL_TEST_MULTIMOV, 1 );
-//
-//   validateCamHDFrame( img );
-//
-//   free( img.data );
-// }

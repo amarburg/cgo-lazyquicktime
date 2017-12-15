@@ -8,14 +8,14 @@ import (
 	"image"
 )
 
-func imageBufferFromImage(img image.Image) C.ImageBuffer {
-	out := C.ImageBuffer{
-		width:  C.int(img.Bounds().Max.X - img.Bounds().Min.X),
-		height: C.int(img.Bounds().Max.Y - img.Bounds().Min.Y),
-	}
 
+func imageToImageBuffer(img image.Image, out *C.ImageBuffer) {
 	// TODO.   Almost certainly a more idiomatic way to do this
 	ok := false
+
+	out.width = C.int(img.Bounds().Max.X - img.Bounds().Min.X)
+	out.height = C.int(img.Bounds().Max.Y - img.Bounds().Min.Y)
+	out.valid = C.uchar(0)
 
 	//fmt.Printf("Image is type %T\n", img)
 
@@ -55,5 +55,11 @@ func imageBufferFromImage(img image.Image) C.ImageBuffer {
 	if ok {
 		out.valid = C.uchar(1)
 	}
-	return out
 }
+
+// func imageBufferFromImage(img image.Image) C.ImageBuffer {
+// 	out := C.ImageBuffer{}
+//
+// 	imageToImageBuffer( img, &out )
+// 	return out
+// }

@@ -11,24 +11,27 @@ import (
 //== These are the "oneshot" versions
 
 //export GetFrame
-func GetFrame(path *C.char, frameNum C.int) C.ImageBuffer {
+func GetFrame(path *C.char, frameNum C.int, out *C.ImageBuffer) int {
 
 	goPath := C.GoString(path)
 	ext, err := multimov.MovieExtractorFromPath(goPath)
 
 	if err != nil {
 		fmt.Printf("Error extracting image: %s", err.Error())
-		return C.ImageBuffer{}
+		out.valid = C.uchar(0)
+		return -1
 	}
 
 	img, err := ext.ExtractFrame(uint64(frameNum))
 
 	if err != nil {
 		fmt.Printf("Error extracting image: %s", err.Error())
-		return C.ImageBuffer{}
+		out.valid = C.uchar(0)
+		return -1
 	}
 
-	return imageBufferFromImage(img)
+	imageToImageBuffer( img, out )
+	return 0
 }
 
 //export MovInfo

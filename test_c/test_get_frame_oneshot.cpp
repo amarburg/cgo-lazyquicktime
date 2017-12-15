@@ -13,9 +13,14 @@ using std::cout;
 TEST( GetFrame, NullConstructor )
 {
   char url[] = "";
-  ImageBuffer img = GetFrame(url, 1);
+  ImageBuffer img;
 
+  // This should fail!
+  ASSERT_EQ( GetFrame(url, 1, &img), -1 );
+
+  // And the result will be invalid
   ASSERT_EQ( img.valid, 0 );
+
 }
 
 // TEST( GetFrame, LocalFileZeroFrame )
@@ -39,8 +44,9 @@ void validateCamHDFrame( ImageBuffer &img )
 // Test against a real movie
 TEST( GetFrame, GetFrameFromLocalFile )
 {
-  // TODO: How to set this path..?
-  ImageBuffer img = GetFrame( LOCAL_TEST_MOV, 1 );
+  ImageBuffer img;
+
+ASSERT_EQ( GetFrame( LOCAL_TEST_MOV, 1, &img ), 0 );
 
   validateCamHDFrame( img );
 
@@ -50,8 +56,8 @@ TEST( GetFrame, GetFrameFromLocalFile )
 // Test against a real movie
 TEST( GetFrame, GetFrameFromHTTPFile )
 {
-  // TODO: How to set this path..?
-  ImageBuffer img = GetFrame( CI_TEST_MOVIE_URL, 1 );
+  ImageBuffer img;
+  ASSERT_EQ( GetFrame( CI_TEST_MOVIE_URL, 1, &img ), 0 );
 
   validateCamHDFrame( img );
 
@@ -62,8 +68,8 @@ TEST( GetFrame, GetFrameFromHTTPFile )
 // Test against a multimov
 TEST( GetFrame, GetFrameFromLocalMultimov )
 {
-  // TODO: How to set this path..?
-  ImageBuffer img = GetFrame( LOCAL_TEST_MULTIMOV, 1 );
+  ImageBuffer img;
+  ASSERT_EQ( GetFrame( LOCAL_TEST_MULTIMOV, 1, &img ), 0 );
 
   validateCamHDFrame( img );
 

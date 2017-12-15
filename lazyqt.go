@@ -43,13 +43,13 @@ func CloseQt(id C.int) {
 }
 
 //export GetFrameQt
-func GetFrameQt(id C.int, frameNum C.int) C.ImageBuffer {
+func GetFrameQt(id C.int, frameNum C.int, out *C.ImageBuffer) int {
 
 	val, has := QTIds.Load(int(id))
 
 	if !has {
 		fmt.Printf("Id doesn't exist")
-		return C.ImageBuffer{}
+		return -1
 	}
 
 	ext := val.(lazyquicktime.MovieExtractor)
@@ -60,10 +60,11 @@ func GetFrameQt(id C.int, frameNum C.int) C.ImageBuffer {
 
 	if err != nil {
 		fmt.Printf("Error extracting image: %s", err.Error())
-		return C.ImageBuffer{}
+		return -1
 	}
 
-	return imageBufferFromImage(img)
+	imageToImageBuffer(img, out)
+	return 0
 
 }
 
