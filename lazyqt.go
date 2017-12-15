@@ -6,6 +6,7 @@ import "C"
 import (
 	"fmt"
 	"github.com/amarburg/go-lazyquicktime"
+	"github.com/amarburg/go-multimov"
 	"image"
 	"sync"
 )
@@ -21,7 +22,7 @@ func OpenQt(path *C.char) C.int {
 	// Todo, look for duplicates
 
 	goPath := C.GoString(path)
-	ext, err := movieExtractorFromPath(goPath)
+	ext, err := multimov.MovieExtractorFromPath(goPath)
 
 	if err != nil {
 		fmt.Printf("Error extracting image: %s", err.Error())
@@ -87,11 +88,13 @@ func GetMovieInfoQt(id C.int) C.MovieInfo {
 
 }
 
+//== These are the "oneshot" versions
+
 //export GetFrame
 func GetFrame(path *C.char, frameNum C.int) C.ImageBuffer {
 
 	goPath := C.GoString(path)
-	ext, err := movieExtractorFromPath(goPath)
+	ext, err := multimov.MovieExtractorFromPath(goPath)
 
 	if err != nil {
 		fmt.Printf("Error extracting image: %s", err.Error())

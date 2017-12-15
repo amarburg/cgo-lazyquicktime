@@ -2,12 +2,15 @@ package main
 
 // #include "types.h"
 import "C"
+import (
+	"github.com/amarburg/go-multimov"
+)
 
 //export MovInfo
 func MovInfo(path *C.char) C.MovieInfo {
 
 	goPath := C.GoString(path)
-	ext, err := movieExtractorFromPath(goPath)
+	ext, err := multimov.MovieExtractorFromPath(goPath)
 
 	if err != nil || ext == nil {
 		return C.MovieInfo{
