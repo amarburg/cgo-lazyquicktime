@@ -1,24 +1,23 @@
 package main
 
-
 import (
-	"sync"
 	"github.com/amarburg/go-frameset/framesource"
+	"sync"
 )
 
 //TODO.  is Printf on error the best way to get error information out?
 type FrameSourceMap struct {
 	sync.RWMutex
-	nextId				int
-	internal			map[int]framesource.FrameSource
+	nextId   int
+	internal map[int]framesource.FrameSource
 }
 
 func (rm *FrameSourceMap) Load(key int) (framesource.FrameSource, bool) {
 	rm.RLock()
 	defer rm.RUnlock()
 
-	value,ok := rm.internal[key]
-	return value,ok
+	value, ok := rm.internal[key]
+	return value, ok
 }
 
 func (rm *FrameSourceMap) Delete(key int) {
@@ -33,5 +32,5 @@ func (rm *FrameSourceMap) Add(value framesource.FrameSource) int {
 	id := rm.nextId
 	rm.internal[id] = value
 	rm.nextId++
-return id
+	return id
 }

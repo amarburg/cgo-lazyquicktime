@@ -8,7 +8,6 @@ import (
 	"image"
 )
 
-
 func imageToImageBuffer(img image.Image, out *C.ImageBuffer) {
 	// TODO.   Almost certainly a more idiomatic way to do this
 	ok := false

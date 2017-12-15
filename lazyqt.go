@@ -79,8 +79,7 @@ func GetMovieInfoQt(id C.int, info *C.MovieInfo) int {
 
 	ext := val.(lazyquicktime.MovieExtractor)
 
-
-	info.duration =C.float(ext.Duration().Seconds())
+	info.duration = C.float(ext.Duration().Seconds())
 	info.num_frames = C.int(ext.NumFrames())
 	info.valid = C.uchar(1)
 

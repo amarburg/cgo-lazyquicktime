@@ -10,12 +10,10 @@ import (
 	"io"
 )
 
-
-
 var IdMap FrameSourceMap
 
 func init() {
-	IdMap.internal = make( map[int]framesource.FrameSource )
+	IdMap.internal = make(map[int]framesource.FrameSource)
 }
 
 //export OpenFrameSource
@@ -32,7 +30,7 @@ func OpenFrameSource(path *C.char) C.int {
 	}
 
 	// todo.  Make threadsafe
-	return C.int( IdMap.Add( source ) )
+	return C.int(IdMap.Add(source))
 }
 
 //export CloseFrameSource
@@ -54,7 +52,7 @@ func FrameSourceNext(id C.int, buffer *C.ImageBuffer) int64 {
 
 	switch err {
 	case nil:
-		 imageToImageBuffer( img, buffer )
+		imageToImageBuffer(img, buffer)
 		return int64(frameNum)
 	case io.EOF:
 		return 0

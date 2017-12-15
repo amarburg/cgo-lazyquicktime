@@ -8,8 +8,8 @@ build:
       package-dir: github.com/amarburg/cgo-lazyquicktime
 
     # Check gofmt and golint
-    # - almogbaku/gofmt-check@0.9.1
-    # - wercker/golint
+    - almogbaku/gofmt-check@0.9.1
+    - wercker/golint
 
     # Gets the dependencies
     - script:

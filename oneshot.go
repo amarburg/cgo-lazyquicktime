@@ -30,7 +30,7 @@ func GetFrame(path *C.char, frameNum C.int, out *C.ImageBuffer) int {
 		return -1
 	}
 
-	imageToImageBuffer( img, out )
+	imageToImageBuffer(img, out)
 	return 0
 }
 
@@ -45,7 +45,7 @@ func MovInfo(path *C.char, info *C.MovieInfo) int {
 		return -1
 	}
 
-	info.duration =C.float(ext.Duration().Seconds())
+	info.duration = C.float(ext.Duration().Seconds())
 	info.num_frames = C.int(ext.NumFrames())
 	info.valid = C.uchar(1)
 

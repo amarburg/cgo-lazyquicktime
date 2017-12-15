@@ -23,7 +23,7 @@ test: liblazyquicktime.so
 
 
 clean:
-	rm liblazyquicktime.so
+	rm -f liblazyquicktime.so
 	rm -rf test_c/build/
 
 PHONY: build test clean
