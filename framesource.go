@@ -11,7 +11,6 @@ import (
 )
 
 //TODO.  is Printf on error the best way to get error information out?
-
 type FrameSourceMap struct {
 	sync.RWMutex
 	nextId				int
@@ -43,6 +42,10 @@ return id
 
 
 var IdMap FrameSourceMap
+
+func init() {
+	IdMap.internal = make( map[int]framesource.FrameSource )
+}
 
 //export OpenFrameSource
 func OpenFrameSource(path *C.char) C.int {
