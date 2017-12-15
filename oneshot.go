@@ -35,22 +35,19 @@ func GetFrame(path *C.char, frameNum C.int, out *C.ImageBuffer) int {
 }
 
 //export MovInfo
-func MovInfo(path *C.char) C.MovieInfo {
+func MovInfo(path *C.char, info *C.MovieInfo) int {
 
 	goPath := C.GoString(path)
 	ext, err := multimov.MovieExtractorFromPath(goPath)
 
 	if err != nil || ext == nil {
-		return C.MovieInfo{
-			valid: 0,
-		}
-
+		info.valid = C.uchar(0)
+		return -1
 	}
 
-	return C.MovieInfo{
-		duration:   C.float(ext.Duration().Seconds()),
-		num_frames: C.int(ext.NumFrames()),
-		valid:      1,
-	}
+	info.duration =C.float(ext.Duration().Seconds())
+	info.num_frames = C.int(ext.NumFrames())
+	info.valid = C.uchar(1)
 
+	return 0
 }

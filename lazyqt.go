@@ -69,21 +69,21 @@ func GetFrameQt(id C.int, frameNum C.int, out *C.ImageBuffer) int {
 }
 
 //export GetMovieInfoQt
-func GetMovieInfoQt(id C.int) C.MovieInfo {
+func GetMovieInfoQt(id C.int, info *C.MovieInfo) int {
 
 	val, has := QTIds.Load(int(id))
 	if !has {
-		fmt.Printf("Id doesn't exist")
-		return C.MovieInfo{
-			valid: 0,
-		}
+		info.valid = C.uchar(0)
+		return -1
 	}
 
 	ext := val.(lazyquicktime.MovieExtractor)
-	return C.MovieInfo{
-		duration:   C.float(ext.Duration().Seconds()),
-		num_frames: C.int(ext.NumFrames()),
-		valid:      1,
-	}
+
+
+	info.duration =C.float(ext.Duration().Seconds())
+	info.num_frames = C.int(ext.NumFrames())
+	info.valid = C.uchar(1)
+
+	return 0
 
 }

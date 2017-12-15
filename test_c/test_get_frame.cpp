@@ -28,7 +28,8 @@ TEST( GetFrame, GetFrameQtFromLocalFile )
   ASSERT_EQ( GetFrameQt( fd, 10, &img ), 0 );
   validateCamHDFrame( img );
 
-  MovieInfo info = GetMovieInfoQt( fd );
+  MovieInfo info;
+  ASSERT_EQ( GetMovieInfoQt( fd, &info ), 0 );
 
   CloseQt( fd );
 

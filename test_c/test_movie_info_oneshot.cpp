@@ -13,7 +13,10 @@ using std::cout;
 TEST( MovieInfo, FirstTest )
 {
   char url[] = "";
-  MovieInfo info = MovInfo(url);
+  MovieInfo info;
+
+  // Should fail
+  ASSERT_EQ( MovInfo(url, &info), -1);
 
   ASSERT_EQ( info.valid, 0 );
 }
@@ -23,7 +26,8 @@ TEST( MovieInfo, MovieInfoLocalMov )
 {
 
   // TODO: How to set this path..?
-  MovieInfo info = MovInfo( LOCAL_TEST_MOV );
+  MovieInfo info;
+  ASSERT_EQ( MovInfo( LOCAL_TEST_MOV, &info ), 0 );
 
   ASSERT_EQ( info.valid, 1 );
 
@@ -35,7 +39,9 @@ TEST( MovieInfo, MovieInfoLocalMov )
 // Test against a multimov
 TEST( MovieInfo, MovieInfoLocalMultimov )
 {
-  MovieInfo info = MovInfo( LOCAL_TEST_MULTIMOV );
+  // TODO: How to set this path..?
+  MovieInfo info;
+  ASSERT_EQ( MovInfo( LOCAL_TEST_MULTIMOV, &info ), 0 );
 
   ASSERT_EQ( info.valid, 1 );
 
