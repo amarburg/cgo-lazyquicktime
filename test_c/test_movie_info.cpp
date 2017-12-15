@@ -28,15 +28,13 @@ TEST( MovieInfo, MovieInfoLocalMov )
   ASSERT_EQ( info.valid, 1 );
 
   // These values are known apriori
-  ASSERT_EQ( info.num_frames, 31 );
-  ASSERT_FLOAT_EQ( info.duration, 1.0343666 );
+  ASSERT_EQ( info.num_frames, 42 );
+  ASSERT_FLOAT_EQ( info.duration, 1.4014001 );
 }
 
-// Test against a real movie
+// Test against a multimov
 TEST( MovieInfo, MovieInfoLocalMultimov )
 {
-
-  // TODO: How to set this path..?
   MovieInfo info = MovInfo( LOCAL_TEST_MULTIMOV );
 
   ASSERT_EQ( info.valid, 1 );

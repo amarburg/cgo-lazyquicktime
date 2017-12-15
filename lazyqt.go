@@ -5,8 +5,8 @@ import "C"
 
 import (
 	"fmt"
+	"github.com/amarburg/go-frameset/multimov"
 	"github.com/amarburg/go-lazyquicktime"
-	"github.com/amarburg/go-multimov"
 	"sync"
 )
 

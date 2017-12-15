@@ -4,8 +4,8 @@ package main
 import "C"
 
 import (
+	"fmt"
 	"image"
-  "fmt"
 )
 
 func imageBufferFromImage(img image.Image) C.ImageBuffer {

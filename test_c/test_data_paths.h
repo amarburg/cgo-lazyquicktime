@@ -7,7 +7,7 @@ static char CI_TEST_MOVIE_URL[] = "https://rawdata.oceanobservatories.org/files/
 
 // These files are brought in by CMake's ExternalData system and
 // installed in the build directory...
-static char LOCAL_TEST_MOV[] = CMAKE_BINARY_DIR"/CamHD_Vent_Short.mov";
+static char LOCAL_TEST_MOV[] = TESTFILE_DIR"/CamHD_Vent_Short.mov";
 
 // This exists as a copy in this repo..
-static char LOCAL_TEST_MULTIMOV[] = CMAKE_SOURCE_DIR"/four_mov.json";
+static char LOCAL_TEST_MULTIMOV[] = TESTFILE_DIR"/multimov/four_mov.json";
