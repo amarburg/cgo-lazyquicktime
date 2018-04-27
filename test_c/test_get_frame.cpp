@@ -6,11 +6,11 @@
 #include "types.h"
 
 #include "test_data_paths.h"
+#include "validate_camhd_frame.h"
 
 using std::endl;
 using std::cout;
 
-void validateCamHDFrame( ImageBuffer &img );
 
 // Test against a real movie
 TEST( GetFrame, GetFrameQtFromLocalFile )

@@ -6,6 +6,7 @@
 #include "types.h"
 
 #include "test_data_paths.h"
+#include "validate_camhd_frame.h"
 
 using std::endl;
 using std::cout;
@@ -29,17 +30,6 @@ TEST( GetFrame, NullConstructor )
 //   ImageBuffer img = GetFrame( localFilePath, 0 );
 //   ASSERT_EQ( img.valid, 0 );
 // }
-
-void validateCamHDFrame( ImageBuffer &img )
-{
-  ASSERT_EQ( img.valid, 1 );
-
-  ASSERT_EQ( img.width, 1920 );
-  ASSERT_EQ( img.height, 1080 );
-  ASSERT_TRUE( img.data != nullptr );
-  ASSERT_EQ( img.channels, 4 );
-  ASSERT_EQ( img.depth, IMG_8U );
-}
 
 // Test against a real movie
 TEST( GetFrame, GetFrameFromLocalFile )

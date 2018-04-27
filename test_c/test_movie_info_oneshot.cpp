@@ -21,7 +21,7 @@ TEST( MovieInfo, FirstTest )
   ASSERT_EQ( info.valid, 0 );
 }
 
-// Test against a real movie
+// Create from a real movie
 TEST( MovieInfo, MovieInfoLocalMov )
 {
 
@@ -36,7 +36,7 @@ TEST( MovieInfo, MovieInfoLocalMov )
   ASSERT_FLOAT_EQ( info.duration, 1.4014001 );
 }
 
-// Test against a multimov
+// Create from a multimov
 TEST( MovieInfo, MovieInfoLocalMultimov )
 {
   // TODO: How to set this path..?
