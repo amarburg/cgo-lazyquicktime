@@ -10,8 +10,6 @@ import (
 	"sync"
 )
 
-//TODO.  is Printf on error the best way to get error information out?
-
 var QTIds sync.Map
 var NextId = 0
 

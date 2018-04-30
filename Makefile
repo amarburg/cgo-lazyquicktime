@@ -21,9 +21,13 @@ test: liblazyquicktime.so
 			make && \
 	 		make CTEST_OUTPUT_ON_FAILURE=TRUE test
 
+cmd: liblazyquicktime.so
+		mkdir -p cmd/build
+		cd cmd/build && cmake .. && make
+
 
 clean:
 	rm -f liblazyquicktime.so
 	rm -rf test_c/build/
 
-PHONY: build test clean
+.PHONY: build test clean cmd
