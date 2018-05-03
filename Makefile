@@ -28,6 +28,7 @@ cmd: liblazyquicktime.so
 
 clean:
 	rm -f liblazyquicktime.so
+	rm -f liblazyquicktime.h
 	rm -rf test_c/build/
 
 .PHONY: build test clean cmd

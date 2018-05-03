@@ -7,6 +7,7 @@ import "C"
 import (
 	"fmt"
 	"github.com/amarburg/go-frameset/frameset"
+	"github.com/amarburg/go-frameset/framesource"
 )
 
 var FSMap FrameSetMap
@@ -36,4 +37,29 @@ func CloseFrameSet(id C.int) {
 	FSMap.Delete(int(id))
 }
 
-//export
+//export FrameSourceFromFrameSet
+func FrameSourceFromFrameSet(id C.int) C.int {
+
+	set, has := FSMap.Load(int(id))
+
+	if !has {
+		fmt.Printf("FrameSet %d doesn't exist", id)
+		return -1
+	}
+
+	extractor, err := set.MovieExtractor()
+
+	if err != nil {
+		fmt.Printf("Couldn't create movie extractor")
+		return -1
+	}
+
+	source,err := framesource.MakeMovieExtractorFrameSource( extractor )
+
+	if err != nil {
+		fmt.Printf("Couldn't convert movie extractor to frame source")
+		return -1
+	}
+
+	return C.int(IdMap.Add(source))
+}

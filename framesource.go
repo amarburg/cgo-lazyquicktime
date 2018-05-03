@@ -61,3 +61,25 @@ func FrameSourceNext(id C.int, buffer *C.ImageBuffer) int64 {
 		return -1
 	}
 }
+
+//export FrameSourceNumFrames
+// func FrameSourceNumFrames( id C.int ) uint64 {
+// 	source, has := IdMap.Load(int(id))
+// 	if !has {
+// 		fmt.Printf("Id doesn't exist")
+// 		return -1
+// 	}
+//
+// 	return source.NumFrames()
+// }
+
+// //export FrameSourceFrameNum
+// func FrameSourceFrameNum( id C.int ) uint64 {
+// 	source, has := IdMap.Load(int(id))
+// 	if !has {
+// 		fmt.Printf("Id doesn't exist")
+// 		return -1
+// 	}
+//
+// 	return source.FrameNum()
+// }
