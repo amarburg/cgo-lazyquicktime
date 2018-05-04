@@ -6,14 +6,18 @@ ifeq ($(UNAME_S),Darwin)
 			export DYLD_LIBRARY_PATH=gtest/lib
 endif
 
-liblazyquicktime.so: *.go
-	go build -buildmode=c-shared -o liblazyquicktime.so
+
+LIB=libmovieextractor.so
+
+
+${LIB}: *.go
+	go build -buildmode=c-shared -o ${LIB}
 ifeq ($(UNAME_S),Darwin)
-	    install_name_tool -id ${current_dir}/liblazyquicktime.so liblazyquicktime.so
+	    install_name_tool -id ${current_dir}/$@ $@
 endif
 
 
-test: liblazyquicktime.so
+test: ${LIB}
 	mkdir -p test_c/build
 	cd test_c/build && \
 			cmake .. && \
@@ -21,14 +25,13 @@ test: liblazyquicktime.so
 			make && \
 	 		make CTEST_OUTPUT_ON_FAILURE=TRUE test
 
-cmd: liblazyquicktime.so
+cmd: ${LIB}
 		mkdir -p cmd/build
 		cd cmd/build && cmake .. && make
 
 
 clean:
-	rm -f liblazyquicktime.so
-	rm -f liblazyquicktime.h
+	rm -f ${LIB} ${LIB:.so=.h}
 	rm -rf test_c/build/
 
 .PHONY: build test clean cmd

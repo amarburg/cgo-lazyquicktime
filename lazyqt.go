@@ -5,8 +5,7 @@ import "C"
 
 import (
 	"fmt"
-	"github.com/amarburg/go-frameset/multimov"
-	"github.com/amarburg/go-lazyquicktime"
+	"github.com/amarburg/go-movieset"
 	"sync"
 )
 
@@ -19,7 +18,7 @@ func OpenQt(path *C.char) C.int {
 	// Todo, look for duplicates
 
 	goPath := C.GoString(path)
-	ext, err := multimov.MovieExtractorFromPath(goPath)
+	ext, err := movieset.MovieExtractorFromPath(goPath)
 
 	if err != nil {
 		fmt.Printf("Error extracting image: %s", err.Error())
@@ -50,11 +49,13 @@ func GetFrameQt(id C.int, frameNum C.int, out *C.ImageBuffer) int {
 		return -1
 	}
 
-	ext := val.(lazyquicktime.MovieExtractor)
+	ext := val.(movieset.MovieExtractor)
 
-	img, perf, err := ext.ExtractFramePerf(uint64(frameNum))
+img, err := ext.ExtractFrame(uint64(frameNum))
 
-	fmt.Printf("Read took %g; decode took %g\n", perf.Read.Seconds(), perf.Decode.Seconds())
+	// img, perf, err := ext.ExtractFramePerf(uint64(frameNum))
+	//
+	// fmt.Printf("Read took %g; decode took %g\n", perf.Read.Seconds(), perf.Decode.Seconds())
 
 	if err != nil {
 		fmt.Printf("Error extracting image: %s", err.Error())
@@ -75,7 +76,7 @@ func GetMovieInfoQt(id C.int, info *C.MovieInfo) int {
 		return -1
 	}
 
-	ext := val.(lazyquicktime.MovieExtractor)
+	ext := val.(movieset.MovieExtractor)
 
 	info.duration = C.float(ext.Duration().Seconds())
 	info.num_frames = C.int(ext.NumFrames())

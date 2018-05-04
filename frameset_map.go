@@ -1,17 +1,17 @@
 package main
 
 import (
-	"github.com/amarburg/go-frameset/frameset"
+	"github.com/amarburg/go-movieset"
 	"sync"
 )
 
 type FrameSetMap struct {
 	sync.RWMutex
 	nextId   int
-	internal map[int]*frameset.FrameSet
+	internal map[int]*movieset.FrameSet
 }
 
-func (rm *FrameSetMap) Load(key int) (*frameset.FrameSet, bool) {
+func (rm *FrameSetMap) Load(key int) (*movieset.FrameSet, bool) {
 	rm.RLock()
 	defer rm.RUnlock()
 
@@ -25,7 +25,7 @@ func (rm *FrameSetMap) Delete(key int) {
 	delete(rm.internal, key)
 }
 
-func (rm *FrameSetMap) Add(value *frameset.FrameSet) int {
+func (rm *FrameSetMap) Add(value *movieset.FrameSet) int {
 	rm.Lock()
 	defer rm.Unlock()
 	id := rm.nextId

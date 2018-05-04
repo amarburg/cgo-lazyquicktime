@@ -1,0 +1,19 @@
+workspace:
+  base: /go
+  path: src/github.com/amarburg/go-movieset
+
+pipeline:
+  build:
+    image: amarburg/golang-ffmpeg
+    commands:
+      - go get -t -v
+      - go build
+      - go test
+
+  slack:
+    image: plugins/slack
+    secrets: [ slack_webhook ]
+    when:
+      status:
+        - success
+        - failure

@@ -6,14 +6,13 @@ import "C"
 
 import (
 	"fmt"
-	"github.com/amarburg/go-frameset/frameset"
-	"github.com/amarburg/go-frameset/framesource"
+	"github.com/amarburg/go-movieset"
 )
 
 var FSMap FrameSetMap
 
 func init() {
-	FSMap.internal = make(map[int]*frameset.FrameSet)
+	FSMap.internal = make(map[int]*movieset.FrameSet)
 }
 
 //export OpenFrameSet
@@ -22,7 +21,7 @@ func OpenFrameSet(path *C.char) C.int {
 	// Todo, look for duplicates
 
 	goPath := C.GoString(path)
-	source, err := frameset.LoadFrameSet(goPath)
+	source, err := movieset.LoadFrameSet(goPath)
 
 	if err != nil {
 		fmt.Printf("Error loading frame set: %s", err.Error())
@@ -54,7 +53,7 @@ func FrameSourceFromFrameSet(id C.int) C.int {
 		return -1
 	}
 
-	source,err := framesource.MakeMovieExtractorFrameSource( extractor )
+	source,err := movieset.FrameSourceFromMovieExtractor( extractor )
 
 	if err != nil {
 		fmt.Printf("Couldn't convert movie extractor to frame source")
@@ -62,4 +61,23 @@ func FrameSourceFromFrameSet(id C.int) C.int {
 	}
 
 	return C.int(IdMap.Add(source))
+}
+
+//export OpenFrameSetChunk
+func OpenFrameSetChunk(id C.int, chunkName *C.char) C.int {
+	chunk := C.GoString(chunkName)
+	set, has := FSMap.Load(int(id))
+
+	if !has {
+		fmt.Printf("FrameSet %d doesn't exist", id)
+		return -1
+	}
+
+	mov,err := set.MovFromChunk( chunk )
+	if err != nil {
+		fmt.Printf("Can't find chunk \"%s\" in the frameset", chunk)
+		return -1
+	}
+
+	return C.int(IdMap.Add(mov))
 }

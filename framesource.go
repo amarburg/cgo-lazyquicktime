@@ -6,14 +6,14 @@ import "C"
 
 import (
 	"fmt"
-	"github.com/amarburg/go-frameset/framesource"
+	"github.com/amarburg/go-movieset"
 	"io"
 )
 
 var IdMap FrameSourceMap
 
 func init() {
-	IdMap.internal = make(map[int]framesource.FrameSource)
+	IdMap.internal = make(map[int]movieset.FrameSource)
 }
 
 //export OpenFrameSource
@@ -22,7 +22,7 @@ func OpenFrameSource(path *C.char) C.int {
 	// Todo, look for duplicates
 
 	goPath := C.GoString(path)
-	source, err := framesource.MakeFrameSourceFromPath(goPath)
+	source, err := movieset.FrameSourceFromPath(goPath)
 
 	if err != nil {
 		fmt.Printf("Error extracting image: %s", err.Error())
