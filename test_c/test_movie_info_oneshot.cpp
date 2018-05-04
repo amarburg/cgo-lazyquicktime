@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-#include "liblazyquicktime.h"
+#include "libmovieextractor.h"
 #include "types.h"
 
 #include "test_data_paths.h"

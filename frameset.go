@@ -73,7 +73,14 @@ func OpenFrameSetChunk(id C.int, chunkName *C.char) C.int {
 		return -1
 	}
 
-	mov,err := set.MovFromChunk( chunk )
+	chunkmov,err := set.MovFromChunk( chunk )
+	if err != nil {
+		fmt.Printf("Can't convert chunk to movie")
+		return -1
+	}
+
+
+	mov,err := movieset.FrameSourceFromMovieExtractor(chunkmov)
 	if err != nil {
 		fmt.Printf("Can't find chunk \"%s\" in the frameset", chunk)
 		return -1

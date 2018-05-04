@@ -24,24 +24,21 @@ add_definitions( -std=c++11 )
 ## Build as C++ becuase the GTest framework is C++
 file( GLOB TEST_SRCS *.cpp )
 
-add_executable(cgo-lazyquicktime-test ${TEST_SRCS} )
-target_link_libraries( cgo-lazyquicktime-test
-  lazyquicktime
+add_executable(cgo-movieextractor-test ${TEST_SRCS} )
+target_link_libraries( cgo-movieextractor-test
+  movieextractor
   ${GTEST_BOTH_LIBRARIES}
   ${CMAKE_THREAD_LIBS_INIT} )
 
-## Compile in paths to ExternalData
-## Who the hell designed this API?
-
 set( TESTFILE_DIR "${CMAKE_SOURCE_DIR}/../../go-lazyfs-testfiles")
 
-target_compile_definitions( cgo-lazyquicktime-test PUBLIC
+target_compile_definitions( cgo-movieextractor-test PUBLIC
                     CMAKE_BINARY_DIR="${CMAKE_BINARY_DIR}"
                     CMAKE_SOURCE_DIR="${CMAKE_SOURCE_DIR}"
                     TESTFILE_DIR="${TESTFILE_DIR}")
 
 enable_testing()
-add_test( NAME cgo-lazyquicktime-test
-         COMMAND ./cgo-lazyquicktime-test
+add_test( NAME cgo-movieextractor-test
+         COMMAND ./cgo-movieextractor-test
          DIRECTORY ${CMAKE_BINARY_DIR} )
-add_dependencies( cgo-lazyquicktime-test LocalTestMov )
+#add_dependencies( cgo-movieextractor-test LocalTestMov )
