@@ -7,7 +7,7 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 
-LIB=libmovieextractor.so
+LIB=libmovieset.so
 
 
 ${LIB}: *.go

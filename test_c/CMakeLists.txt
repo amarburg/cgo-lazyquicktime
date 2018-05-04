@@ -24,22 +24,22 @@ add_definitions( -std=c++11 )
 ## Build as C++ becuase the GTest framework is C++
 file( GLOB TEST_SRCS *.cpp )
 
-add_executable(cgo-movieextractor-test ${TEST_SRCS} )
-target_link_libraries( cgo-movieextractor-test
-  movieextractor
+add_executable(cgo-movieset-test ${TEST_SRCS} )
+target_link_libraries( cgo-movieset-test
+  movieset
   ${GTEST_BOTH_LIBRARIES}
   ${CMAKE_THREAD_LIBS_INIT} )
 
 set( TESTFILE_DIR "${CMAKE_SOURCE_DIR}/../../go-lazyfs-testfiles")
 
-target_compile_definitions( cgo-movieextractor-test PUBLIC
+target_compile_definitions( cgo-movieset-test PUBLIC
                     CMAKE_BINARY_DIR="${CMAKE_BINARY_DIR}"
                     CMAKE_SOURCE_DIR="${CMAKE_SOURCE_DIR}"
                     TESTFILE_DIR="${TESTFILE_DIR}")
 
 enable_testing()
 
-add_test( NAME cgo-movieextractor-test
-         COMMAND ./cgo-movieextractor-test
+add_test( NAME cgo-movieset-test
+         COMMAND ./cgo-movieset-test
          DIRECTORY ${CMAKE_BINARY_DIR} )
 #add_dependencies( cgo-movieextractor-test LocalTestMov )
