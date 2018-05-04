@@ -53,7 +53,7 @@ func FrameSourceFromFrameSet(id C.int) C.int {
 		return -1
 	}
 
-	source,err := movieset.FrameSourceFromMovieExtractor( extractor )
+	source,err := movieset.MakeMovieSequential( extractor )
 
 	if err != nil {
 		fmt.Printf("Couldn't convert movie extractor to frame source")
@@ -80,7 +80,7 @@ func OpenFrameSetChunk(id C.int, chunkName *C.char) C.int {
 	}
 
 
-	mov,err := movieset.FrameSourceFromMovieExtractor(chunkmov)
+	mov,err := movieset.MakeMovieSequential(chunkmov)
 	if err != nil {
 		fmt.Printf("Can't find chunk \"%s\" in the frameset", chunk)
 		return -1

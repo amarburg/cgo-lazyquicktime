@@ -14,7 +14,7 @@ import (
 func GetFrame(path *C.char, frameNum C.int, out *C.ImageBuffer) int {
 
 	goPath := C.GoString(path)
-	ext, err := movieset.MovieExtractorFromPath(goPath)
+	ext, err := movieset.OpenMovieExtractor(goPath)
 
 	if err != nil {
 		fmt.Printf("Error extracting image: %s", err.Error())
@@ -38,7 +38,7 @@ func GetFrame(path *C.char, frameNum C.int, out *C.ImageBuffer) int {
 func MovInfo(path *C.char, info *C.MovieInfo) int {
 
 	goPath := C.GoString(path)
-	ext, err := movieset.MovieExtractorFromPath(goPath)
+	ext, err := movieset.OpenMovieExtractor(goPath)
 
 	if err != nil || ext == nil {
 		info.valid = C.uchar(0)

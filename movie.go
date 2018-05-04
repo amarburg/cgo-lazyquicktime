@@ -12,13 +12,13 @@ import (
 var QTIds sync.Map
 var NextId = 0
 
-//export OpenQt
-func OpenQt(path *C.char) C.int {
+//export OpenMovie
+func OpenMovie(path *C.char) C.int {
 
 	// Todo, look for duplicates
 
 	goPath := C.GoString(path)
-	ext, err := movieset.MovieExtractorFromPath(goPath)
+	ext, err := movieset.OpenMovieExtractor(goPath)
 
 	if err != nil {
 		fmt.Printf("Error extracting image: %s", err.Error())
@@ -34,13 +34,13 @@ func OpenQt(path *C.char) C.int {
 
 }
 
-//export CloseQt
-func CloseQt(id C.int) {
+//export CloseMovie
+func CloseMovie(id C.int) {
 	QTIds.Delete(int(id))
 }
 
-//export GetFrameQt
-func GetFrameQt(id C.int, frameNum C.int, out *C.ImageBuffer) int {
+//export GetMovieFrame
+func GetMovieFrame(id C.int, frameNum C.int, out *C.ImageBuffer) int {
 
 	val, has := QTIds.Load(int(id))
 
@@ -51,7 +51,7 @@ func GetFrameQt(id C.int, frameNum C.int, out *C.ImageBuffer) int {
 
 	ext := val.(movieset.MovieExtractor)
 
-img, err := ext.ExtractFrame(uint64(frameNum))
+	img, err := ext.ExtractFrame(uint64(frameNum))
 
 	// img, perf, err := ext.ExtractFramePerf(uint64(frameNum))
 	//
@@ -67,8 +67,8 @@ img, err := ext.ExtractFrame(uint64(frameNum))
 
 }
 
-//export GetMovieInfoQt
-func GetMovieInfoQt(id C.int, info *C.MovieInfo) int {
+//export GetMovieInfo
+func GetMovieInfo(id C.int, info *C.MovieInfo) int {
 
 	val, has := QTIds.Load(int(id))
 	if !has {

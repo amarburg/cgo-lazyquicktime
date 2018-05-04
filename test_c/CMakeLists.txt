@@ -38,6 +38,7 @@ target_compile_definitions( cgo-movieextractor-test PUBLIC
                     TESTFILE_DIR="${TESTFILE_DIR}")
 
 enable_testing()
+
 add_test( NAME cgo-movieextractor-test
          COMMAND ./cgo-movieextractor-test
          DIRECTORY ${CMAKE_BINARY_DIR} )

@@ -6,13 +6,13 @@ import (
 )
 
 //TODO.  is Printf on error the best way to get error information out?
-type FrameSourceMap struct {
+type SequentialMap struct {
 	sync.RWMutex
 	nextId   int
-	internal map[int]movieset.FrameSource
+	internal map[int]movieset.Sequential
 }
 
-func (rm *FrameSourceMap) Load(key int) (movieset.FrameSource, bool) {
+func (rm *SequentialMap) Load(key int) (movieset.Sequential, bool) {
 	rm.RLock()
 	defer rm.RUnlock()
 
@@ -20,13 +20,13 @@ func (rm *FrameSourceMap) Load(key int) (movieset.FrameSource, bool) {
 	return value, ok
 }
 
-func (rm *FrameSourceMap) Delete(key int) {
+func (rm *SequentialMap) Delete(key int) {
 	rm.Lock()
 	defer rm.Unlock()
 	delete(rm.internal, key)
 }
 
-func (rm *FrameSourceMap) Add(value movieset.FrameSource) int {
+func (rm *SequentialMap) Add(value movieset.Sequential) int {
 	rm.Lock()
 	defer rm.Unlock()
 	id := rm.nextId

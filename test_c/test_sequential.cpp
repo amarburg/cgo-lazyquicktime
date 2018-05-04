@@ -15,20 +15,20 @@ using std::cout;
 // Test against a real movie
 TEST( FrameSource, FromFrameSet )
 {
-  int fd = OpenFrameSource( LOCAL_TEST_FRAMESET );
+  int fd = OpenSequential( LOCAL_TEST_FRAMESET );
 
   // TODO: How to set this path..?
   ImageBuffer img;
 
   for( int i = 0; i < LOCAL_TEST_FRAMESET_NUMFRAMES; i++ ) {
-    int err = FrameSourceNext( fd, &img );
+    int err = SequentialNext( fd, &img );
 
     ASSERT_EQ( err, LOCAL_TEST_FRAMESET_FRAMES[i] );
 
     validateCamHDFrame( img );
   }
 
-  CloseQt( fd );
+  CloseSequential( fd );
 
   free( img.data );
 }
