@@ -1,6 +1,6 @@
 workspace:
   base: /go
-  path: src/github.com/amarburg/go-movieset
+  path: src/github.com/amarburg/cgo-movieset
 
 pipeline:
   build:
@@ -9,6 +9,7 @@ pipeline:
       - go get -t -v
       - go build
       - go test
+      - make test
 
   slack:
     image: plugins/slack
