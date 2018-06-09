@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-#include "libmovieextractor.h"
+#include "libmovieset.h"
 #include "types.h"
 
 #include "test_data_paths.h"
