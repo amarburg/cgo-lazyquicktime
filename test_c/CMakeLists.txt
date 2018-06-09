@@ -9,7 +9,7 @@ include_directories( ${CMAKE_SOURCE_DIR}/..
 link_directories( ${CMAKE_SOURCE_DIR}/.. )
 
 #if(LINUX)
-  find_package( Threads REQUIRED )
+find_package( Threads REQUIRED )
 #endif()
 
 if(APPLE)

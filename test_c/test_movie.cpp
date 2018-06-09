@@ -13,7 +13,7 @@ using std::cout;
 
 
 // Test against a real movie
-TEST( GetFrame, GetFrameQtFromLocalFile )
+TEST( OpenMovie, FromLocalMov )
 {
   int fd = OpenMovie( LOCAL_TEST_MOV );
 

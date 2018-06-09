@@ -32,7 +32,7 @@ TEST( GetFrame, NullConstructor )
 // }
 
 // Test against a real movie
-TEST( GetFrame, GetFrameFromLocalFile )
+TEST( GetFrame, FromLocalMov )
 {
   ImageBuffer img;
 
@@ -44,7 +44,7 @@ ASSERT_EQ( GetFrame( LOCAL_TEST_MOV, 1, &img ), 0 );
 }
 
 // Test against a real movie
-TEST( GetFrame, GetFrameFromHTTPFile )
+TEST( GetFrame, FromHTTPFile )
 {
   ImageBuffer img;
   ASSERT_EQ( GetFrame( CI_TEST_MOVIE_URL, 1, &img ), 0 );
@@ -56,7 +56,7 @@ TEST( GetFrame, GetFrameFromHTTPFile )
 
 
 // Test against a multimov
-TEST( GetFrame, GetFrameFromLocalMultimov )
+TEST( GetFrame, FromLocalMultimov )
 {
   ImageBuffer img;
   ASSERT_EQ( GetFrame( LOCAL_TEST_MULTIMOV, 1, &img ), 0 );
