@@ -8,6 +8,8 @@ pipeline:
     pull: true
     commands:
       - go get -t -v
+      ## Megacheck will call out many "unused" functions in exported API
+      - golangci-lint run --disable megacheck
       - go build
       - go test
       - make test
