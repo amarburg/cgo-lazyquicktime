@@ -19,6 +19,7 @@ endif
 
 test: ${LIB}
 	mkdir -p test_c/build
+	go get -u github.com/amarburg/go-lazyfs-testfiles
 	cd test_c/build && \
 			cmake .. && \
 			make gtest_ext && \
