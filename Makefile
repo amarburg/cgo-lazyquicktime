@@ -10,6 +10,8 @@ endif
 LIB=libmovieset.so
 
 
+default: test
+
 ${LIB}: *.go
 	go build -buildmode=c-shared -o ${LIB}
 ifeq ($(UNAME_S),Darwin)
@@ -26,6 +28,7 @@ test: ${LIB}
 			make && \
 	 		make CTEST_OUTPUT_ON_FAILURE=TRUE test
 
+
 cmd: ${LIB}
 		mkdir -p cmd/build
 		cd cmd/build && cmake .. && make
@@ -35,4 +38,4 @@ clean:
 	rm -f ${LIB} ${LIB:.so=.h}
 	rm -rf test_c/build/
 
-.PHONY: build test clean cmd
+.PHONY: build test clean cmd default
