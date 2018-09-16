@@ -36,8 +36,36 @@ func CloseFrameSet(id C.int) {
 	FSMap.Delete(int(id))
 }
 
-//export FrameSourceFromFrameSet
-func FrameSourceFromFrameSet(id C.int) C.int {
+// //export FrameSourceFromFrameSet
+// func FrameSourceFromFrameSet(id C.int) C.int {
+//
+// 	set, has := FSMap.Load(int(id))
+//
+// 	if !has {
+// 		fmt.Printf("FrameSet %d doesn't exist", id)
+// 		return -1
+// 	}
+//
+// 	extractor, err := set.MovieExtractor()
+//
+// 	if err != nil {
+// 		fmt.Printf("Couldn't create movie extractor")
+// 		return -1
+// 	}
+//
+// 	source,err := movieset.MakeMovieSequential( extractor )
+//
+// 	if err != nil {
+// 		fmt.Printf("Couldn't convert movie extractor to frame source")
+// 		return -1
+// 	}
+//
+// 	return C.int(IdMap.Add(source))
+// }
+
+
+//export FrameSetToSequential
+func FrameSetToSequential( id C.int ) C.int {
 
 	set, has := FSMap.Load(int(id))
 
@@ -46,22 +74,17 @@ func FrameSourceFromFrameSet(id C.int) C.int {
 		return -1
 	}
 
-	extractor, err := set.MovieExtractor()
+	seq,err := movieset.MakeFrameSetSequential( set )
 
 	if err != nil {
-		fmt.Printf("Couldn't create movie extractor")
+		fmt.Printf("Error turning frame set into sequential: %s", err);
 		return -1
 	}
 
-	source,err := movieset.MakeMovieSequential( extractor )
-
-	if err != nil {
-		fmt.Printf("Couldn't convert movie extractor to frame source")
-		return -1
-	}
-
-	return C.int(IdMap.Add(source))
+	return C.int(IdMap.Add(seq))
 }
+
+
 
 //export OpenFrameSetChunk
 func OpenFrameSetChunk(id C.int, chunkName *C.char) C.int {
@@ -75,14 +98,13 @@ func OpenFrameSetChunk(id C.int, chunkName *C.char) C.int {
 
 	chunkmov,err := set.MovFromChunk( chunk )
 	if err != nil {
-		fmt.Printf("Can't convert chunk to movie")
+		fmt.Printf("Can't convert chunk to movie: %s\n", err)
 		return -1
 	}
 
-
 	mov,err := movieset.MakeMovieSequential(chunkmov)
 	if err != nil {
-		fmt.Printf("Can't find chunk \"%s\" in the frameset", chunk)
+		fmt.Printf("Can't make sequential from movie for chunk \"%s\": %s\n", chunk, err )
 		return -1
 	}
 
