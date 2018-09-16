@@ -6,13 +6,12 @@ ifeq ($(UNAME_S),Darwin)
 			export DYLD_LIBRARY_PATH=gtest/lib
 endif
 
-
 LIB=libmovieset.so
 
 
 default: test
 
-${LIB}: *.go
+${LIB}: *.go  ${GOPATH}/src/github.com/amarburg/go-movieset/*.go
 	go build -buildmode=c-shared -o ${LIB}
 ifeq ($(UNAME_S),Darwin)
 	    install_name_tool -id ${current_dir}/$@ $@
